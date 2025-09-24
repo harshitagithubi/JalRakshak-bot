@@ -97,7 +97,7 @@
       max-height: calc(100vh - 140px);
     }
 
-    /* Desktop Layout - Map and Controls Side by Side */
+    /* Desktop Layout - Chat and Map Side by Side (SWAPPED ORDER) */
     .desktop-layout {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -112,6 +112,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       border: 2px solid rgba(0,96,100,0.2);
       height: fit-content;
+      order: 2; /* Map moves to right side */
     }
 
     .controls-panel {
@@ -184,6 +185,7 @@
       background: white;
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border: 2px solid #4caf50; /* Green border to make it more visible */
     }
 
     .option-btn {
@@ -292,6 +294,7 @@
       flex-direction: column;
       overflow: hidden;
       min-height: 300px;
+      order: 1; /* Chat moves to left side */
     }
 
     #messages {
@@ -443,6 +446,10 @@
         padding: 15px;
       }
       
+      .chat-container {
+        order: 3; /* Chat comes after map on mobile */
+      }
+      
       #small-map {
         height: 250px;
       }
@@ -517,25 +524,37 @@
       <button id="clear-chat-btn">🗑️ Clear Chat</button>
     </div>
 
-  <div class="main-content">
-    <!-- Small Map Section -->
-    <div class="map-section">
-      <div class="map-header">
-        <span>📍 Your Current Location</span>
-        <span id="location-status" style="color: #4caf50; font-size: 0.9rem;">● Online</span>
+    <div class="desktop-layout">
+      <!-- Chat Container (Now on Left - Order 1) -->
+      <div class="chat-container">
+        <div id="messages"></div>
+        
+        <!-- INPUT AREA - CLEARLY VISIBLE -->
+        <div id="input-area">
+          <input id="user-input" type="text" placeholder="Type your message here...">
+          <button id="send-btn">Send</button>
+        </div>
       </div>
-      <div id="small-map"></div>
-      <div class="location-display">
-        <div class="location-text">
-          <strong>📍 Your Location:</strong>
+
+      <!-- Map Section (Now on Right - Order 2) -->
+      <div class="map-section">
+        <div class="map-header">
+          <span>📍 Your Current Location</span>
+          <span id="location-status" style="color: #4caf50; font-size: 0.9rem;">● Online</span>
         </div>
-        <div class="coordinates-text" id="coordinates-text">
-          <span class="loading">Detecting coordinates...</span>
+        <div id="small-map"></div>
+        <div class="location-display">
+          <div class="location-text">
+            <strong>📍 Your Location:</strong>
+          </div>
+          <div class="coordinates-text" id="coordinates-text">
+            <span class="loading">Detecting coordinates...</span>
+          </div>
+          <div class="address-text" id="address-text">
+            <span class="loading">Getting address...</span>
+          </div>
+          <div class="location-timestamp" id="location-timestamp"></div>
         </div>
-        <div class="address-text" id="address-text">
-          <span class="loading">Getting address...</span>
-        </div>
-        <div class="location-timestamp" id="location-timestamp"></div>
       </div>
     </div>
 
@@ -550,17 +569,6 @@
 
     <!-- Emergency Button -->
     <button id="emergency-btn">🚨 Emergency! Send Location</button>
-
-    <!-- Chat Container -->
-    <div class="chat-container">
-      <div id="messages"></div>
-      
-      <!-- INPUT AREA - CLEARLY VISIBLE -->
-      <div id="input-area">
-        <input id="user-input" type="text" placeholder="Type your message here...">
-        <button id="send-btn">Send</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -570,7 +578,7 @@
     const greetings = {
       en: "🙏 Namaste, I am JalRakshak. Please stay calm. Upload photos 📸 and report floods, tsunamis, or high waves immediately. How can I help you today?",
       hi: "🙏 नमस्ते, मैं जलरक्षक हूँ। कृपया शांत रहें। यदि आप बाढ़, सुनामी या ऊँची लहरें देखें, तो तुरंत रिपोर्ट करें। 📸 फोटो अपलोड करें। मैं आपकी कैसे मदद कर सकता हूँ?",
-      ta: "🙏 வணக்கம், நான் ஜலரக்ஷக். தயவுசெய்து அமைதியாக இருங்கள். வெள்ளம், சுனாமি, உயர்ந்த அலைகள் இருந்தால் உடனடியாக தெரிவிக்கவும். 📸 புகைப்படங்களை பதிவேற்றவும்.",
+      ta: "🙏 வணக்கம், நான் ஜலரக்ஷக். தயவுசெய்து அமைதியாக இருங்கள். வெள்ளம், சுனாமி, உயர்ந்த அலைகள் இருந்தால் உடனடியாக தெரிவிக்கவும். 📸 புகைப்படங்களை பதிவேற்றவும்.",
       bn: "🙏 নমস্কার, আমি জলরক্ষক। দয়া করে শান্ত থাকুন। বন্যা, সুনামি বা উঁচু ঢেউ দেখলে অবিলম্বে রিপোর্ট করুন। 📸 ছবি আপলোড করুন। আমি কীভাবে সাহায্য করতে পারি?",
       te: "🙏 నమస్తే, నేను జలరక్షక్। దయచేసి శాంతంగా ఉండండి। మీరు వరదలు, సునామీలు లేదా ఎత్తైన అలలు గమనిస్తే వెంటనే నివేదించండి। 📸 ఫోటోలు అప్‌లోడ్ చేయండి।"
     };
