@@ -7,72 +7,86 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
-      color: #333;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-      background: linear-gradient(135deg, #006064 0%, #00838f 100%);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      position: relative;
-    }
+        header {
+            background: linear-gradient(135deg, #006064 0%, #00838f 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-    header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .controls-section {
-      background: rgba(255,255,255,0.9);
-      padding: 10px 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+        .main-content {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-    #lang-select {
-      padding: 8px 12px;
-      border-radius: 15px;
-      border: 2px solid #062190;
-      background: white;
-      color: #006064;
-      font-weight: 600;
-      cursor: pointer;
-    }
+        /* 1. PRIORITY: Accessibility Controls */
+        .accessibility-section {
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 2px solid #006064;
+        }
 
-    #clear-chat-btn {
-      padding: 8px 15px;
-      background: #f44336;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
+        #lang-select {
+            padding: 8px 12px;
+            border-radius: 15px;
+            border: 2px solid #006064;
+            background: white;
+            color: #006064;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
 
-    #clear-chat-btn:hover {
-      background: #d32f2f;
-      transform: translateY(-1px);
-    }
+        #clear-chat-btn {
+            padding: 8px 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #clear-chat-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-1px);
+        }
 
     .main-content {
       flex: 1;
@@ -307,31 +321,31 @@
       animation: slideIn 0.3s ease-out;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .message.bot {
-      background: #e3f2fd;
-      border: 1px solid #bbdefb;
-      align-self: flex-start;
-      border-bottom-left-radius: 5px;
-    }
+        .message.bot {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
 
-    .message.user {
-      background: #80deea;
-      color: #333;
-      align-self: flex-end;
-      border-bottom-right-radius: 5px;
-    }
+        .message.user {
+            background: #80deea;
+            color: #333;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
 
-    .message.emergency-location {
-      background: linear-gradient(135deg, #ff5722 0%, #d84315 100%) !important;
-      color: white !important;
-      border: 2px solid #bf360c !important;
-      animation: pulse 1s infinite alternate;
-    }
+        .message.emergency-location {
+            background: linear-gradient(135deg, #ff5722 0%, #d84315 100%) !important;
+            color: white !important;
+            border: 2px solid #bf360c !important;
+            animation: pulse 1s infinite alternate;
+        }
 
     @keyframes pulse {
       from { box-shadow: 0 0 10px rgba(255,87,34,0.5); }
@@ -390,10 +404,10 @@
       transition: all 0.3s ease;
     }
 
-    #send-btn:hover {
-      background: #004d40;
-      transform: translateY(-1px);
-    }
+        #send-btn:hover {
+            background: #004d40;
+            transform: translateY(-1px);
+        }
 
     /* Loading indicator */
     .loading::after {
@@ -487,19 +501,21 @@
     <h1>🌊 JalRakshak - Your Safety First</h1>
   </header>
 
-  <div class="controls-section">
-    <div>
-      <label for="lang-select" style="color: #006064; font-weight: 600; margin-right: 8px;">🌐 Language:</label>
-      <select id="lang-select">
-        <option value="en">English</option>
-        <option value="hi">हिन्दी</option>
-        <option value="ta">தமிழ்</option>
-        <option value="bn">বাংলা</option>
-        <option value="te">తెలుగు</option>
-      </select>
+  <div class="main-content">
+    <!-- 1. PRIORITY: Accessibility Controls -->
+    <div class="accessibility-section">
+      <div>
+        <label for="lang-select" style="color: #006064; font-weight: 600; margin-right: 8px;">🌐 Language:</label>
+        <select id="lang-select">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="ta">தமிழ்</option>
+          <option value="bn">বাংলা</option>
+          <option value="te">తెలుగు</option>
+        </select>
+      </div>
+      <button id="clear-chat-btn">🗑️ Clear Chat</button>
     </div>
-    <button id="clear-chat-btn">🗑️ Clear Chat</button>
-  </div>
 
   <div class="main-content">
     <!-- Small Map Section -->
@@ -554,7 +570,7 @@
     const greetings = {
       en: "🙏 Namaste, I am JalRakshak. Please stay calm. Upload photos 📸 and report floods, tsunamis, or high waves immediately. How can I help you today?",
       hi: "🙏 नमस्ते, मैं जलरक्षक हूँ। कृपया शांत रहें। यदि आप बाढ़, सुनामी या ऊँची लहरें देखें, तो तुरंत रिपोर्ट करें। 📸 फोटो अपलोड करें। मैं आपकी कैसे मदद कर सकता हूँ?",
-      ta: "🙏 வணக்கம், நான் ஜலரக்ஷக். தயவுசெய்து அமைதியாக இருங்கள். வெள்ளம், சுனாமி, உயர்ந்த அலைகள் இருந்தால் உடனடியாக தெரிவிக்கவும். 📸 புகைப்படங்களை பதிவேற்றவும்.",
+      ta: "🙏 வணக்கம், நான் ஜலரக்ஷக். தயவுசெய்து அமைதியாக இருங்கள். வெள்ளம், சுனாமি, உயர்ந்த அலைகள் இருந்தால் உடனடியாக தெரிவிக்கவும். 📸 புகைப்படங்களை பதிவேற்றவும்.",
       bn: "🙏 নমস্কার, আমি জলরক্ষক। দয়া করে শান্ত থাকুন। বন্যা, সুনামি বা উঁচু ঢেউ দেখলে অবিলম্বে রিপোর্ট করুন। 📸 ছবি আপলোড করুন। আমি কীভাবে সাহায্য করতে পারি?",
       te: "🙏 నమస్తే, నేను జలరక్షక్। దయచేసి శాంతంగా ఉండండి। మీరు వరదలు, సునామీలు లేదా ఎత్తైన అలలు గమనిస్తే వెంటనే నివేదించండి। 📸 ఫోటోలు అప్‌లోడ్ చేయండి।"
     };
@@ -565,7 +581,7 @@
       hi: ["🌊 बाढ़", "🌊 सुनामी", "🌀 चक्रवात", "〰️ ऊँची लहरें", "🏗️ बांध टूटना", "🌧️ भारी बारिश"],
       ta: ["🌊 வெள்ளம்", "🌊 சுனாமி", "🌀 சுழல்காற்று", "〰️ உயர் அலைகள்", "🏗️ அணை உடைதல்", "🌧️ தீவிர மழை"],
       bn: ["🌊 বন্যা", "🌊 সুনামি", "🌀 ঘূর্ণিঝড়", "〰️ উঁচু ঢেউ", "🏗️ বাঁধ ভেঙে যাওয়া", "🌧️ ভারী বৃষ্টি"],
-      te: ["🌊 వరద", "🌊 సునామি", "🌀 తుఫాను", "〰️ ఎత్తైన అలలు", "🏗️ అణకట్ట విరగడం", "🌧️ భారీ వర్షం"]
+      te: ["🌊 వరద", "🌊 సునామి", "🌀 తుఫాను", "〰️ ఎత్తైన అలలు", "🏗️ అణకట్ట విరగడం", "🌧️ భారీ వర్షం"]
     };
 
     // Emergency button labels
@@ -895,7 +911,7 @@ Respond ONLY in ${currentLang} language.`
       }
     });
 
-    // Clear chat button - FIXED
+    // Clear chat button
     document.getElementById("clear-chat-btn").onclick = clearChat;
 
     // Initialize everything
